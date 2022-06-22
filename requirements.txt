@@ -1,0 +1,9 @@
+fastapi
+uvicorn
+passlib
+python-dotenv
+pymongo
+PyJWT
+pydantic
+make
+pydantic[email]
