@@ -38,7 +38,8 @@ async def login(user: UserInLogin):
     if userdb == None:
         return JSONResponse(
             content={"message": f"user {user.user} is not registered in database"}, 
-            status_code=400)
+            status_code=400
+            )
     elif user.user == userdb['user']:
         verify_password(user.password, userdb['password'])
         return write_token(user.dict())
