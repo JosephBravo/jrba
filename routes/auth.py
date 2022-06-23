@@ -8,8 +8,9 @@ from fastapi.responses import JSONResponse
 # Models
 from models.user import User, UserInLogin
 from models.dbmodel import default
-from routes.user import create_user
+from routes.user import create_user, verify_password, get_user_by_email
 
+# Utils
 import datetime
 import json
 
@@ -22,16 +23,19 @@ def sign_up(user: User):
                 sort_keys=True,
                 indent=1,
                 default=default)
+    if user == 'null':
+        return JSONResponse(content={"message": "user already registered in database"}, status_code=400)
     return JSONResponse(content=json.loads(user), status_code=201)
-    
 
 @auth_routes.post("/login")
 def login(user: UserInLogin):
-    if user.user == "nelson@gmail.com":
+    userdb = get_user_by_email(user.user) # When user is bad handle error
+
+    if user.user == userdb['user']:
+        passvery = verify_password(user.password, userdb['password'])
         return write_token(user.dict())
     else:
         return JSONResponse(content={"message": "User not found"}, status_code=404)
-
 
 @auth_routes.post("/verify/token")
 def verify_token(Authorization: str = Header(None)):
