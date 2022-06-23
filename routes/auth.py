@@ -27,14 +27,18 @@ async def sign_up(user: User):
                 indent=1,
                 default=default)
     if user_created == 'null':
-        return JSONResponse(content={"message": f"user {user.user} already exists in database. try another email"}, status_code=400)
+        return JSONResponse(
+            content={"message": f"user {user.user} already exists in database. try another email"}, 
+            status_code=400)
     return JSONResponse(content=json.loads(user_created), status_code=201)
 
 @auth_routes.post("/login")
 async def login(user: UserInLogin):
     userdb = conn.local.user.find_one({"user": user.user})
     if userdb == None:
-        return JSONResponse(content={"message": f"user {user.user} is not registered in database"}, status_code=400)
+        return JSONResponse(
+            content={"message": f"user {user.user} is not registered in database"}, 
+            status_code=400)
     elif user.user == userdb['user']:
         verify_password(user.password, userdb['password'])
         return write_token(user.dict())
