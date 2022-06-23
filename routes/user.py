@@ -24,7 +24,6 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 @user.get('/users', response_model=list[User], tags=["users"])
 async def list_users():
-    # print(list(conn.local.user.find()))
     return usersEntity(conn.local.user.find())
 
 @user.get('/users/{id}', response_model=User, tags=["users"])
@@ -32,16 +31,18 @@ async def retrieve_user(id: str):
     return userObject(conn.local.user.find_one({"_id": ObjectId(id)}))
 
 @user.post('/users', response_model=User, tags=["users"])
-def create_user(user: User):
+async def create_user(user: User):
     new_user = dict(user)
-    try:
-        get_user_by_email(user.user)
-        return JSONResponse(content={"message": "user already registered in database"}, status_code=400)
-    except Exception:
+    if conn.local.user.find_one({"user": user.user}) != None:
+        return JSONResponse(
+            content={"message": f"user {new_user['user']} already registered in database"}, 
+            status_code=400)
+    else:
         new_user["password"] = get_password_hash(new_user["password"])
         del new_user["id"]
         id = conn.local.user.insert_one(new_user).inserted_id
         return userObject(conn.local.user.find_one({"_id": id}))
+        
 
 @user.put("/users/{id}", response_model=User, tags=["users"])
 async def update_user(id: str, user: User):
