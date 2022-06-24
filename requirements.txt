@@ -8,3 +8,6 @@ pydantic
 make
 pydantic[email]
 bcrypt
+pytest
+requests
+Faker

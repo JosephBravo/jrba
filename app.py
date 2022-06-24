@@ -10,8 +10,8 @@ app = FastAPI(
   title="jrba",
   description="REST API using Fastapi and Mongodb",
   version="0.0.1",
-  openapi_tags=tags_metadata
-  )
+  openapi_tags=tags_metadata)
+
 
 app.include_router(user, prefix='/api')
 app.include_router(auth_routes, prefix='/api')
