@@ -24,7 +24,6 @@
 python3 -m venv somename
 ```
 
-
 ## Activate environment: ▶️
 
 - Linux:
@@ -39,7 +38,6 @@ source env/bin/activate
 . env\Scripts\activate
 ```
 
-
 ## Install requirements: 🎯
 
 - Linux:
@@ -53,7 +51,6 @@ make setup
 ```
 pip install -r requirements.txt
 ```
-
 
 ## Execution - Run Project 🚀
 
@@ -72,7 +69,6 @@ uvicorn app:app --reload
 ```
 
 *This will run the application on port http://127.0.0.1:8000*
-
 
 ## Documentation [SwaggerUI]📋
 
