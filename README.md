@@ -70,10 +70,15 @@ uvicorn app:app --reload
 
 *This will run the application on port http://127.0.0.1:8000*
 
-## Documentation [SwaggerUI]📋
+## Documentation 📋
 
-*URL documentation: http://127.0.0.1:8000/docs#/*
+## SwaggerUI
 
+URL documentation: http://127.0.0.1:8000/docs#/*
+
+## Postman
+
+URL documentation: https://documenter.getpostman.com/view/13262243/UzBsHjMg
 
 ## Run Test [Pytest] 🔍
 
